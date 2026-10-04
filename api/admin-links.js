@@ -1,0 +1,2 @@
+import {BASE_STATE} from '../lib/base.js';import {tokenForMesa,validAdminPin} from '../lib/auth.js';
+export default function handler(req,res){res.setHeader('Cache-Control','no-store');if(req.method!=='GET')return res.status(405).json({error:'Método no permitido'});if(!validAdminPin(req.headers['x-admin-pin']))return res.status(401).json({error:'PIN incorrecto'});return res.status(200).json({links:BASE_STATE.tables.map(t=>({id:t.id,local:t.local,token:tokenForMesa(t.id)}))})}
